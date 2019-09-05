@@ -1,22 +1,27 @@
 <?php
 
-require 'config.php';
+require_once 'config.php';
+
+function is_logged() {
+    return isset($_SESSION['user']);
+}
 
 if (!is_logged()) {
     header('location: index.php');
     exit();
 }
 
-$stmt = $pdo->execute('SELECT * FROM clients ORDER BY name');
+$stmt = $pdo->prepare('SELECT * FROM clients ORDER BY name');
+$stmt->execute();
 $clients = $stmt->fetchAll();
 
-$stmt = $pdo->query('
-    SELECT  services.*,
-            clients.name as client_name
-    FROM    services
-            LEFT JOIN clients ON clients.id = services.client_id
-')
-$services = $stmt->fetchAll();
+//$stmt = $pdo->query('
+//    SELECT  services.*,
+//            clients.name as client_name
+//    FROM    services
+//         LEFT JOIN clients ON clients.id = services.client_id
+//')
+//$services = $stmt->fetchAll();
 
 ?>
 <!DOCTYPE html>
@@ -33,9 +38,9 @@ $services = $stmt->fetchAll();
                 <fieldset>
                     <legend>Novo cliente</legend>
                     <input type="text" name="name" placeholder="Name">
-                    <input type="text" name="name" placeholder="CEP">
-                    <input type="text" name="name" placeholder="Número">
-                    <input type="text" name="name" placeholder="Complemento">
+                    <input type="text" name="cep" placeholder="CEP">
+                    <input type="text" name="num" placeholder="Número">
+                    <input type="text" name="compl" placeholder="Complemento">
                     <input type="submit" value="Adicionar">
                 </fieldset>
             </form>
@@ -45,7 +50,7 @@ $services = $stmt->fetchAll();
                 </tr>
                 <?php foreach ($clients as $client): ?>
                     <tr>
-                        <td><?= $CLIENT['name'] ?></td>
+                        <td><?= $client['name'] ?></td>
                         <td>
                             <a class="edit" href="edit_client.php?id=<?= $client['id'] ?>">Editar</a>
                             <a class="delete" href="del_client.php?id=<?= $client['id'] ?>">Remover</a>

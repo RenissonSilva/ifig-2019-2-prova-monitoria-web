@@ -1,15 +1,13 @@
 <?php
 
-session_start();
+if(!isset($_SESSION)){
+    session_start();
+}
 
 $db_user = 'root';
-$db_pw = 'ranieri';
-$db_dsn = 'mysql:host=localhost;dbname=web-2019-1;';
+$db_pw = 'ifpe';
+$db_dsn = 'mysql:host=localhost;dbname=web-2019-2;';
 
-$pdo = new PDO($dsn, $db_user, $db_pw);
-
-functino is_logged() {
-    return isset($_SESSION['user']);
-}
+$pdo = new PDO($db_dsn, $db_user, $db_pw);
 
 ?>

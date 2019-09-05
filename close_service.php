@@ -16,10 +16,10 @@ $id = $_GET['id'];
 
 $stmt = $pdo->prepare('
     SELECT  services.*,
-            clients.name as client_name
+            client_name
     FROM    services
-            LEFT JOIN clients ON clients.id = services.client_id
-    WHERE services.id = ?
+            LEFT JOIN clients ON client_id = services_client_id
+    WHERE services_id = ?
 ');
 $stmt->execute($id)
 

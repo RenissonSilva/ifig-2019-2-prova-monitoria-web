@@ -1,8 +1,12 @@
 <?php
 
-require 'config.php'
+require 'config.php';
 
-if (is_logged()) {
+function is_logged() {
+    return isset($_SESSION['user']);
+}
+
+if(is_logged()){
     header('location: home.php');
 }
 
