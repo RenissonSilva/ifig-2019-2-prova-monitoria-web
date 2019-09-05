@@ -5,12 +5,12 @@ require_once 'config.php';
 function is_logged() {
     return isset($_SESSION['user']);
 }
-
+//Se não estiver logado ,redireciona para index.php
 if (!is_logged()) {
     header('location: index.php');
     exit();
 }
-
+//Seleciona do banco todos os clientes cadastrados e os ordena por nome
 $stmt = $pdo->prepare('SELECT * FROM clients ORDER BY name');
 $stmt->execute();
 $clients = $stmt->fetchAll();

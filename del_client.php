@@ -10,13 +10,13 @@ if (!is_logged()) {
     header('location: index.php');
     exit();
 }
-
+//pega o id do cliente que será deletado
 $id = $_GET['id'];
 
 $stmt = $pdo->prepare('  
     DELETE FROM clients
-    WHERE services_id = ?
+    WHERE client_id = $id;
 ');
-$stmt->execute($id)
+$stmt->execute($id);
 
  ?>
